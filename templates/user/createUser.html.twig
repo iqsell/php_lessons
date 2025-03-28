@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProductController!{% endblock %}
+
+{% block body %}
+    <form action="{{ path('create_user') }}" enctype="multipart/form-data" method="POST"> 
+        <input name="first_name" class="firstname" type="text" placeholder="first_name">
+        <input name="last_name" class="lastname" type="text" placeholder="last_name">
+        <input name="age" class="age" type="text" placeholder="age">
+        <input name="status" class="status" type="text" placeholder="status">
+        <input name="telegram" class="telegram" type="text" placeholder="telegram">
+        <input name="email" class="email" type="text" placeholder="email">
+        <input name="address" class="address" type="text" placeholder="address">
+        <select name="department">
+            {% for i in department %}
+                <option value="{{ i.id }}">{{ i.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="file" name="icon" class="icon" accept="image/jpg, image/png">
+        <input type="submit">
+    </form>
+{% endblock %}

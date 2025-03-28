@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProductController!{% endblock %}
+
+{% block body %}
+
+<style>
+.container{
+    margin-bottom:2vh
+}
+
+</style>
+
+<form action="{{path('update_user', {user: user.id})}}" enctype="multipart/form-data" method="POST" >
+    <div class="container">
+        <input type= "hidden" name="_method" value="PUT">
+        <input type="text" name="first_name" value="{{ user.firstname }}">
+        <input type="text" name="last_name" value="{{ user.lastname }}">
+        <input type="number" name="age" value="{{ user.age }}">
+        <input type="text" name="status" value="{{ user.status }}">
+        <input type="text" name="telegram" value="{{ user.telegram }}">
+        <input type="text" name="email" value="{{ user.email }}">
+        <input type="text" name="address" value="{{ user.address }}">
+        <select name="department">
+            {% for i in department %}
+                <option value="{{ i.id }}" {% if user.department.id == i.id %}
+                selected
+                {% endif %}
+                >{{ i.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <input type="file" name="icon" class="icon" accept="image/jpg, image/png">
+    <input type="submit" value="Сохранить">
+</form>
+{% endblock %}

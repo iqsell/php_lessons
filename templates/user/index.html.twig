@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Users{% endblock %}
+
+{% block body %}
+<style>
+.user-icon {
+        width: 50px;  /* Размер картинки */
+        height: 50px;
+        object-fit: cover;  /* Обрезка картинки по размеру */
+    }
+</style>
+
+<table>
+    <thead>
+    <tr>
+        <th>Фото</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Возрас</th>
+        <th>Статус</th>
+        <th>Почта</th>
+        <th>Телеграм</th>
+        <th>Адрес</th>
+        <th>Отдел</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>
+                {% if user.icon %}
+                    <img src="{{ asset('public/icon/' ~ user.icon) }}" class="user-icon">
+                {% else %}
+                    <img src="{{ asset('public/icon/default.png') }}" class="user-icon">
+                {% endif %}
+            </td>
+            <td>{{ user.firstname }}</td>
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.age }}</td>
+            <td>{{ user.status }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.telegram }}</td>
+            <td>{{ user.address}}</td>
+            <td>{{ user.department.name }}</td>
+
+            <td>
+                <form method="POST" action="{{ path('delete_user', {"user": user.id}) }}">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button>Удалить</button>
+                </form>
+
+                <form method="GET" action="{{ path('edit_user', {"user": user.id}) }}">
+                    <input type="hidden" name="_method" value="UPDATE">
+                    <button>Изменить</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<hr/>
+<form method="GET" action="{{ path('index_user') }}">
+    <input type="text" placeholder="поиск по имени или email" name="search">
+    <select name="department">
+        <option value="0">All</option>
+        {% for i in department %}
+            <option value="{{ i.id }}">{{ i.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit">
+</form>
+{% endblock %}
